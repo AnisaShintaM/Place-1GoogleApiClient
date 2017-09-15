@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity implements
     private PlaceListAdapter mAdapter;
     private RecyclerView mRecyclerView;
 
-
     /**
      * Called when the activity is starting
      *
@@ -73,24 +72,46 @@ public class MainActivity extends AppCompatActivity implements
                 .addApi(Places.GEO_DATA_API)
                 .enableAutoManage(this, this)
                 .build();
+
     }
 
+
     // TODO (5) Override onConnected, onConnectionSuspended and onConnectionFailed for GoogleApiClient
-        @Override
-            public void onConnected(@Nullable Bundle connectionHint) {
-                Log.i(TAG, "API Client Connection Successful!");
-        }
+    /***
+     * Called when the Google API Client is successfully connected
+     *
+     * @param connectionHint Bundle of data provided to clients by Google Play services
+     */
+    @Override
+    public void onConnected(@Nullable Bundle connectionHint) {
+        Log.i(TAG, "API Client Connection Successful!");
+    }
 
-        @Override
-            public void onConnectionSuspended(int cause) {
-                Log.i(TAG, "API Client Connection Suspended!");
-        }
+    /***
+     * Called when the Google API Client is suspended
+     *
+     * @param cause cause The reason for the disconnection. Defined by constants CAUSE_*.
+     */
+    @Override
+    public void onConnectionSuspended(int cause) {
+        Log.i(TAG, "API Client Connection Suspended!");
+    }
 
-         @Override
-            public void onConnectionFailed(@NonNull ConnectionResult result) {
-                 Log.e(TAG, "API Client Connection Failed!");
-         }
+    /***
+     * Called when the Google API Client failed to connect to Google Play Services
+     *
+     * @param result A ConnectionResult that can be used for resolving the error
+     */
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult result) {
+        Log.e(TAG, "API Client Connection Failed!");
+    }
 
+    /***
+     * Button Click event handler to handle clicking the "Add new location" Button
+     *
+     * @param view
+     */
 
     public void onAddPlaceButtonClicked(View view) {
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
@@ -102,21 +123,20 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     // TODO (7) Override onResume and inside it initialize the location permissions checkbox
-    public void onResume() {
-        super.onResume();
+        @Override
+        public void onResume() {
+            super.onResume();
 
-        // Initialize location permissions checkbox
-        CheckBox locationPermissions = (CheckBox) findViewById(R.id.location_permission_checkbox);
-        if (ActivityCompat.checkSelfPermission(MainActivity.this,
-                android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            locationPermissions.setChecked(false);
-        } else {
-            locationPermissions.setChecked(true);
-            locationPermissions.setEnabled(false);
+            // Initialize location permissions checkbox
+            CheckBox locationPermissions = (CheckBox) findViewById(R.id.location_permission_checkbox);
+            if (ActivityCompat.checkSelfPermission(MainActivity.this,
+                    android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                locationPermissions.setChecked(false);
+            } else {
+                locationPermissions.setChecked(true);
+                locationPermissions.setEnabled(false);
+            }
         }
-    }
-
-
 
     // TODO (8) Implement onLocationPermissionClicked to handle the CheckBox click event
     // TODO (9) Implement the Add Place Button click event to show  a toast message with the permission status
