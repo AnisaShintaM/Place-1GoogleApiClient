@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements
     private PlaceListAdapter mAdapter;
     private RecyclerView mRecyclerView;
 
+
     /**
      * Called when the activity is starting
      *
@@ -77,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements
     // TODO (5) Override onConnected, onConnectionSuspended and onConnectionFailed for GoogleApiClient
         @Override
             public void onConnected(@Nullable Bundle connectionHint) {
-                 Log.i(TAG, "API Client Connection Successful!");
+                Log.i(TAG, "API Client Connection Successful!");
         }
 
         @Override
@@ -91,37 +92,37 @@ public class MainActivity extends AppCompatActivity implements
          }
 
 
-        public void onAddPlaceButtonClicked(View view) {
-            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+    public void onAddPlaceButtonClicked(View view) {
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
             Toast.makeText(this, getString(R.string.need_location_permission_message), Toast.LENGTH_LONG).show();
             return;
-            }
-            Toast.makeText(this, getString(R.string.location_permissions_granted_message), Toast.LENGTH_LONG).show();
+        }
+        Toast.makeText(this, getString(R.string.location_permissions_granted_message), Toast.LENGTH_LONG).show();
     }
 
     // TODO (7) Override onResume and inside it initialize the location permissions checkbox
-            @Override
-            public void onResume() {
-                super.onResume();
+    public void onResume() {
+        super.onResume();
 
-                // Initialize location permissions checkbox
-                CheckBox locationPermissions = (CheckBox) findViewById(R.id.location_permission_checkbox);
-                if (ActivityCompat.checkSelfPermission(MainActivity.this,
-                        android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    locationPermissions.setChecked(false);
-                } else {
-                    locationPermissions.setChecked(true);
-                    locationPermissions.setEnabled(false);
-                }
-            }
+        // Initialize location permissions checkbox
+        CheckBox locationPermissions = (CheckBox) findViewById(R.id.location_permission_checkbox);
+        if (ActivityCompat.checkSelfPermission(MainActivity.this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            locationPermissions.setChecked(false);
+        } else {
+            locationPermissions.setChecked(true);
+            locationPermissions.setEnabled(false);
+        }
+    }
+
 
 
     // TODO (8) Implement onLocationPermissionClicked to handle the CheckBox click event
     // TODO (9) Implement the Add Place Button click event to show  a toast message with the permission status
-            public void onLocationPermissionClicked(View view) {
-                ActivityCompat.requestPermissions(MainActivity.this,
-                        new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
-                        PERMISSIONS_REQUEST_FINE_LOCATION);
-            }
-        }
+    public void onLocationPermissionClicked(View view) {
+        ActivityCompat.requestPermissions(MainActivity.this,
+                new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                PERMISSIONS_REQUEST_FINE_LOCATION);
+    }
+}
